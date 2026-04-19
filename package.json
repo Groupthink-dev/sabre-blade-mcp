@@ -1,0 +1,54 @@
+{
+  "name": "sabre-blade-mcp",
+  "version": "0.1.0",
+  "description": "MCP server for Sabre travel APIs — air shopping, hotel search, trip management, and utility lookups with token-efficient output and dual write-gates",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "sabre-blade-mcp": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx watch src/index.ts",
+    "dev:http": "TRANSPORT=http tsx watch src/index.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "tsc --noEmit",
+    "clean": "rm -rf dist"
+  },
+  "keywords": [
+    "mcp",
+    "sabre",
+    "travel",
+    "flights",
+    "hotels",
+    "booking",
+    "gds",
+    "blade-mcp"
+  ],
+  "author": "groupthink-dev",
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "@hono/node-server": "^1.14.1",
+    "hono": "^4.7.6",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.10",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.2",
+    "vitest": "^3.0.9",
+    "@vitest/coverage-v8": "^3.0.9"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "files": [
+    "dist/**/*.js",
+    "dist/**/*.d.ts",
+    "README.md",
+    "LICENSE"
+  ]
+}
