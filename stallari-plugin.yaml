@@ -1,0 +1,77 @@
+name: sabre-blade-mcp
+version: "0.1.1"
+description: "Sabre GDS travel MCP — air search, hotel search, car search, bookings, trip management"
+author: groupthink-dev
+licence: MIT
+tier: certified
+author_type: first-party
+readiness: beta
+contract: travel-v1
+
+services:
+  air:
+    search: air_search
+    price: air_price
+    rules: air_rules
+    seatmap: air_seatmap
+    book: air_book
+  hotel:
+    search: hotel_search
+    avail: hotel_avail
+    content: hotel_content
+    book: hotel_book
+  car:
+    search: car_search
+  trip:
+    get: trip_get
+    list: trip_list
+    cancel: trip_cancel
+  utility:
+    geo_search: geo_search
+    airline_lookup: airline_lookup
+    destinations: destinations
+
+setup:
+  icon: "✈️"
+  blurb: "Sabre GDS — search flights, hotels, cars, book travel, manage trips"
+  auth_model: oauth_client
+  complexity: moderate
+
+install:
+  runtime: node
+  package: sabre-blade-mcp
+  command: sabre-blade-mcp
+
+env:
+  - name: SABRE_CLIENT_ID
+    secret: true
+    required: true
+    description: "Sabre OAuth client ID"
+  - name: SABRE_CLIENT_SECRET
+    secret: true
+    required: true
+    description: "Sabre OAuth client secret"
+  - name: SABRE_PCC
+    secret: false
+    required: true
+    description: "Pseudo City Code (agency identifier)"
+  - name: SABRE_ENVIRONMENT
+    secret: false
+    required: false
+    description: "cert (default) or production"
+  - name: SABRE_WRITE_ENABLED
+    secret: false
+    required: false
+    description: "Set to 'true' to enable booking and cancellation"
+  - name: TRANSPORT
+    secret: false
+    required: false
+    description: "stdio (default) or http"
+  - name: MCP_API_TOKEN
+    secret: true
+    required: false
+    description: "Bearer token for HTTP transport auth"
+
+conformance:
+  required: "6/6"
+  last_tested: "2026-04-21"
