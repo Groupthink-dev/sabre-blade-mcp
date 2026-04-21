@@ -36,6 +36,33 @@ setup:
   blurb: "Sabre GDS — search flights, hotels, cars, book travel, manage trips"
   auth_model: oauth_client
   complexity: moderate
+  fields:
+    - key: SABRE_CLIENT_ID
+      label: "Client ID"
+      secret: true
+      required: true
+      placeholder: "OAuth client ID"
+      help: "From your Sabre Dev Studio application"
+    - key: SABRE_CLIENT_SECRET
+      label: "Client Secret"
+      secret: true
+      required: true
+      placeholder: "OAuth client secret"
+    - key: SABRE_PCC
+      label: "Pseudo City Code"
+      required: true
+      placeholder: "e.g. A1B2"
+      help: "Agency identifier assigned by Sabre"
+    - key: SABRE_ENVIRONMENT
+      label: "Environment"
+      required: false
+      placeholder: "cert"
+      help: "cert (default, sandbox) or production"
+    - key: SABRE_WRITE_ENABLED
+      label: "Enable bookings"
+      type: boolean
+      required: false
+      help: "Allow creating bookings and cancelling trips"
 
 install:
   runtime: node
@@ -63,14 +90,6 @@ env:
     secret: false
     required: false
     description: "Set to 'true' to enable booking and cancellation"
-  - name: TRANSPORT
-    secret: false
-    required: false
-    description: "stdio (default) or http"
-  - name: MCP_API_TOKEN
-    secret: true
-    required: false
-    description: "Bearer token for HTTP transport auth"
 
 conformance:
   required: "6/6"
