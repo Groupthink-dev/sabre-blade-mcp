@@ -2,7 +2,7 @@ name: sabre-blade-mcp
 version: "0.1.1"
 description: "Sabre GDS travel MCP — air search, hotel search, car search, bookings, trip management"
 author: groupthink-dev
-licence: MIT
+license: MIT
 tier: certified
 author_type: first-party
 readiness: beta
