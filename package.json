@@ -1,6 +1,6 @@
 {
   "name": "sabre-blade-mcp",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "MCP server for Sabre travel APIs — air shopping, hotel search, trip management, and utility lookups with token-efficient output and dual write-gates",
   "type": "module",
   "main": "dist/index.js",
