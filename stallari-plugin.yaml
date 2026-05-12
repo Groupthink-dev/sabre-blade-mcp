@@ -94,3 +94,7 @@ env:
 conformance:
   required: "6/6"
   last_tested: "2026-04-21"
+
+requires:
+  adapter_contracts:
+    - "travel >= 1.0"
