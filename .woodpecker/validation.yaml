@@ -1,0 +1,47 @@
+# Linux validation lane on the Woodpecker site runners (Track B blade batch 6b,
+# infra/iac ADR-0047 § Decision 6; standard shape in the blade scoping note).
+#
+# The Woodpecker port of `.github/workflows/ci.yml`, which stopped running for pull
+# requests when this repository moved to git.groupthink.asia on 2026-10-02.
+# The GitHub node 20 matrix row drops; `engines.node >=20` stays declared
+# for consumers (estate node pin, Tier 2 decision 9).
+#
+# Gate: three green push runs and three green pull-request runs, then Forgejo
+# branch protection on `main` requires `ci/woodpecker/pr/validation`. Until
+# then `main` is protected with no status check and merges are operator acts.
+#
+# Secret-free by construction (CONV-36): no `from_secret`, no `op://`.
+# `.woodpecker/*` is a may-not-mutate CI surface (ADR-0021): edits here are
+# architect-rider work, never dispatched agent work. Every image names its
+# registry and a digest: FCOS Podman refuses short names without a TTY.
+when:
+  - event: push
+    branch: main
+  - event: pull_request
+
+labels:
+  platform: linux/amd64
+  backend: docker
+  estate: meridian
+  lane: linux
+
+clone:
+  - name: clone
+    image: docker.io/woodpeckerci/plugin-git:2.10.1@sha256:550075c844fcec0af41d9d28f9860aa5d8c43e1e9419be4b9266dc02c2f29804
+    settings:
+      partial: false
+
+steps:
+  - name: validate
+    # Estate node pin (Tier 2 decision 9), same digest as Stallari/mcp-helpers-ts.
+    image: docker.io/library/node:22-bookworm@sha256:363e1587494626837fa7f9a23bdb453d13b0ff3c67c705c2805cfc69c2d2fad7
+    environment:
+      npm_config_cache: /woodpecker/.npm-cache
+      CI: "true"
+    commands:
+      - node --version
+      - npm --version
+      - npm ci
+      - npm run lint
+      - npm run build
+      - npm test
