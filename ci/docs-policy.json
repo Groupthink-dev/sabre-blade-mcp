@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "upstream": "dev/stables@d8e9f559396bd14437bd3d34a5de2baa297f5dee",
+  "files": [
+    "README.md",
+    "CHANGELOG.md"
+  ],
+  "markdownDirectories": [
+    "docs",
+    "docs/adr"
+  ],
+  "fullValidation": []
+}

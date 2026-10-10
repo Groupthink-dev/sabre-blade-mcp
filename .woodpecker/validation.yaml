@@ -30,15 +30,28 @@ clone:
     image: docker.io/woodpeckerci/plugin-git:2.10.1@sha256:550075c844fcec0af41d9d28f9860aa5d8c43e1e9419be4b9266dc02c2f29804
     settings:
       partial: false
+      fetch_target_branch: true
 
 steps:
+  - name: docs
+    image: docker.io/library/python:3.13-bookworm@sha256:227b6570d6ee07061ae6ca2eb04dedfb6d2b34045835f343065b9869e4d427ea
+    commands:
+      - python ci/validation_scope.py
+      - python -m unittest discover -s ci -p 'test_validation_scope.py' -v
+      - python ci/check_docs.py
   - name: validate
+    depends_on: [docs]
     # Estate node pin (Tier 2 decision 9), same digest as Stallari/mcp-helpers-ts.
     image: docker.io/library/node:22-bookworm@sha256:363e1587494626837fa7f9a23bdb453d13b0ff3c67c705c2805cfc69c2d2fad7
     environment:
       npm_config_cache: /woodpecker/.npm-cache
       CI: "true"
     commands:
+      - |
+        if [ "$(cat .ci-validation-scope 2>/dev/null)" = docs ]; then
+          echo "Docs-only diff: full validation is not required"
+          exit 0
+        fi
       - node --version
       - npm --version
       - npm ci
